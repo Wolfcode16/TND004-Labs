@@ -1,0 +1,10 @@
+^C:\USERS\JOVAN\DESKTOP\UNIVERSITY\1.PROGRAMMING\02. TND004 (DATA STRUCTURE)\LABS\LAB1\LAB1\CODE\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/Jovan/Desktop/University/1.Programming/02. TND004 (Data structure)/Labs/Lab1/lab1/code" "-BC:/Users/Jovan/Desktop/University/1.Programming/02. TND004 (Data structure)/Labs/Lab1/lab1/build" --check-stamp-file "C:/Users/Jovan/Desktop/University/1.Programming/02. TND004 (Data structure)/Labs/Lab1/lab1/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

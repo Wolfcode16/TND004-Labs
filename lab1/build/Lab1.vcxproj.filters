@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab1\lab1\code\lab1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab1\lab1\code\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab1\lab1\code\test_data.txt" />
+    <None Include="C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab1\lab1\code\test_result.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1C09CACC-6D34-34B5-8C0B-8C972CBC1817}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

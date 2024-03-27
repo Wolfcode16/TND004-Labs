@@ -1,0 +1,7 @@
+﻿  Scanning sources for module dependencies...
+  lab1.cpp
+  Compiling...
+  lab1.cpp
+C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab1\lab1\code\lab1.cpp(216,26): warning C4018: '<': signed/unsigned mismatch
+LINK : warning LNK4300: ignoring '/INCREMENTAL' because input module contains ASAN metadata
+  Lab1.vcxproj -> C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab1\lab1\build\Debug\Lab1.exe
