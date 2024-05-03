@@ -1,0 +1,10 @@
+^C:\USERS\JOVAN\DESKTOP\UNIVERSITY\1.PROGRAMMING\02. TND004 (DATA STRUCTURE)\LABS\LAB2\LAB2\BUILD\CMAKEFILES\F505C3FE4F0AC7B06F777D3BF971E576\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/Jovan/Desktop/University/1.Programming/02. TND004 (Data structure)/Labs/Lab2/lab2/code" "-BC:/Users/Jovan/Desktop/University/1.Programming/02. TND004 (Data structure)/Labs/Lab2/lab2/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/Jovan/Desktop/University/1.Programming/02. TND004 (Data structure)/Labs/Lab2/lab2/build/TND004-Lab-2.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

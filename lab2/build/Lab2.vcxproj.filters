@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab2\lab2\code\lab2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab2\lab2\code\set.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab2\lab2\code\set.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab2\lab2\code\node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab2\lab2\code\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{A16625EC-803C-3DBC-82FD-CB919D5C683A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1225E75B-F260-3AFB-87C1-96D2AB208700}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

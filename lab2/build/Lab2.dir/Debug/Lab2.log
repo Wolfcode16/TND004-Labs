@@ -1,0 +1,7 @@
+﻿  Scanning sources for module dependencies...
+  set.cpp
+  Compiling...
+  set.cpp
+C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab2\lab2\code\set.cpp(48,27): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+LINK : warning LNK4300: ignoring '/INCREMENTAL' because input module contains ASAN metadata
+  Lab2.vcxproj -> C:\Users\Jovan\Desktop\University\1.Programming\02. TND004 (Data structure)\Labs\Lab2\lab2\build\Debug\Lab2.exe
