@@ -9,6 +9,7 @@
 
 #include <unordered_map>
 #include <set>
+#include <fstream>
 
 void plotData(const std::string& name);
 
@@ -60,7 +61,7 @@ void plotData(const std::string& name) {
 
     std::unordered_map<float, std::set<std::pair<int, int>>> slopes;
 
-    // ************ SLOPE CALCULATION ************
+    // ************ CALCULATE SLOPE & INSERT INTO VECTOR ************
     for (int p1 = 0; p1 < std::ssize(points) - 1; p1++)         // Point1 chosen to compare other points with
     {
         for (int p2 = p1 + 1; p2 < std::ssize(points); p2++)    // Loop through rest of points to compare to Point1
@@ -92,6 +93,34 @@ void plotData(const std::string& name) {
                 slopes[k].insert({X1, Y1});
                 slopes[k].insert({X2, Y2});
             }
+        }
+    }
+
+    // ************ CREATION OF LINES ************
+    
+    std::set<std::pair<int, std::set<std::pair<int, int>>>> linesToDraw;  // No need for map since we just need a simple vector holding sets of pairs.
+    
+    for (auto& k : slopes) 
+    {
+        // ------------- PRINTS OUT ALL K VALUES AND HOW MANY POINTS ALONG THE LINES (DEBUG PURPOSES) ---------------
+
+        //if (k.second.size() > 3)  // If it has more than 3 points
+        //{
+        //    // Write out the first and last point into a txt file.
+        //    std::cout   << std::left << std::setw(10) << "|| K value = " << std::setw(10) << k.first 
+        //                << std::setw(20) << " || Points along the same k value = " << std::setw(3) << k.second.size() << "|| \n";
+        //}
+        //else
+        //{
+        //    std::cout   << std::left << std::setw(10) << "|| K value = " << std::setw(10) << k.first 
+        //                << std::setw(20) << " || Points along the same k value = " << std::setw(3) << k.second.size() << "|| \n";
+        //}
+
+        // Find a K value with < 3 points
+        if (k.second.size() > 3) 
+        {
+            // Insert the first and the last into lines.
+            
         }
     }
 
