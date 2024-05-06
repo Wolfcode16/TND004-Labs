@@ -15,11 +15,6 @@ void plotData(const std::string& name);
 
 /* ************************************* */
 
-struct Point {
-    double x = 0.0;
-    double y = 0.0;
-};
-
 /* ****************** MAIN ****************** */
 
 int main() try {
@@ -34,8 +29,6 @@ int main() try {
 }
 
 /* ***************** FUNCTIONS ******************** */
-
-double CalcSlope(Point& start, Point& end) { return ((end.x - start.x) / (end.y - start.y)); }
 
 void plotData(const std::string& name) {
 
@@ -53,49 +46,117 @@ void plotData(const std::string& name) {
      *   pair:           class for points, holds (x,y)                               *
      *********************************************************************************/
 
-    std::unordered_map<float, std::set<std::pair<int, int>>> slopes;
+    std::set<std::pair<int, std::set<std::pair<int, int>>>> linesToDraw;  // No need for map since we just need a simple vector holding sets of pairs.
 
     // ************ CALCULATE SLOPE & INSERT INTO VECTOR ************
-    for (int p1 = 0; p1 < std::ssize(points) - 1;
-         p1++)  // Point1 chosen to compare other points with
+    for (int p1 = 0; p1 < std::ssize(points) - 1; p1++)                     // Point1 chosen to compare other points with
     {
-        for (int p2 = p1 + 1; p2 < std::ssize(points);
-             p2++)  // Loop through rest of points to compare to Point1
+        std::unordered_map<float, std::set<std::pair<int, int>>> slopes;    // Calculate slopes independently for every iteration
+
+        for (int p2 = p1 + 1; p2 < std::ssize(points); p2++)                // Loop through rest of points to compare to Point1
         {
-            // Point 1 Coordinates (non-normalized)
+                                                                            // Point 1 Coordinates (non-normalized)
             float X1 = points[p1].position.x * 32767;
             float Y1 = points[p1].position.y * 32767;
 
-            // Point 2 Coordinates (non-normalized)
+                                                                            // Point 2 Coordinates (non-normalized)
             float X2 = points[p2].position.x * 32767;
             float Y2 = points[p2].position.y * 32767;
 
-            float k;       // Slope value
-            if (X1 != X2)  // If the denominator is not = 0
+            float k;                                                        // Slope value
+            if (X1 != X2)                                                   // If the denominator is not = 0
             {
-                k = (Y2 - Y1) / (X2 - X1);
-            } else {
-                k = std::numeric_limits<float>::infinity();
+                k = (Y2 - Y1) / (X2 - X1);                                  // Slope calculations
+            } 
+            else 
+            {
+                k = std::numeric_limits<float>::infinity();                 // Divided by 0 --> infinity
             }
 
             // If we are not comparing the same points with each other.
-            if (p1 != p2) {
-                if (k == -0) {
+            if (p1 != p2) 
+            {                                                 
+                if (k == -0) 
+                {                                              // Keep zeros positive.
                     k = 0;
                 }
 
                 // insert points in the index with same k value
-                slopes[k].insert({X1, Y1});
-                slopes[k].insert({X2, Y2});
+                slopes[k].insert({X1, Y1});                                 // Insert first point
+                slopes[k].insert({X2, Y2});                                 // Insert second point
+            }
+        }
+
+        // Sort line segments depending on first point's y value
+        for (auto& e : slopes) 
+        {
+            if (e.second.size() > 3) 
+            {
+                linesToDraw.insert({(*(e.second.begin())).second, std::move(e.second)});    // Inserting the y values into lineToDraw
             }
         }
     }
 
     // ************ CREATION OF LINES ************
 
-    std::set<std::pair<int, std::set<std::pair<int, int>>>> linesToDraw;  // No need for map since we just need a simple vector holding sets of pairs.
+    // Remove short segments
+    for (auto i = linesToDraw.begin(); i != linesToDraw.end(); ++i)                         
+    {
+        for (auto j = linesToDraw.begin(); j != linesToDraw.end();) 
+        {
+            if (i != j)
+            {   
+                std::pair<int, int> start1 = *((*i).second.begin());                                        // Get the coordinates 
+                std::pair<int, int> end1 = *(--(*i).second.end());
+                std::pair<int, int> start2 = *((*j).second.begin());
+                std::pair<int, int> end2 = *(--(*j).second.end());
 
-    // Open up output file
+                int slope1, slope2;
+                if (start1.first != end1.first)
+                {
+                    slope1 = (end1.second - start1.second) / (end1.first - start1.first);  // Calculating slope 1
+                }
+                else
+                {
+                    slope1 = std::numeric_limits<float>::infinity();
+                }
+
+                if (start2.first != end2.first)
+                {
+                    slope2 = (end2.second - start2.second) / (end2.first - start2.first);  // Calculating slope 2
+                }
+                else
+                {
+                    slope2 = std::numeric_limits<float>::infinity();
+                }
+
+                if (slope1 == slope2 && start1.first >= start2.first && start1.second >= start2.second &&   // If the slopes are the same AND start1 and end1 is within start2 and end2
+                    end1.first <= end2.first && end1.second <= end2.second) 
+                {                                   
+                    i = linesToDraw.erase(i);                                                               // Erase the points inbetween
+
+                    if (i == linesToDraw.end())
+                    {
+                        j = linesToDraw.end();                                                              
+                    }
+                    else
+                    {
+                        j = linesToDraw.begin();
+                    }
+                } 
+                else
+                {
+                    ++j;
+                }
+            } 
+            else
+            {
+                ++j;
+            }
+        }
+    }
+
+    // Open output file for writing
     std::ofstream outputFile("../detectionsystem/data/output/segments-" + name);
     if (!outputFile) 
     {
@@ -103,35 +164,24 @@ void plotData(const std::string& name) {
         return;
     }
 
-    for (auto& k : slopes) {
-        // ------------- PRINTS OUT ALL K VALUES AND HOW MANY POINTS ALONG THE LINES (DEBUG PURPOSES) ---------------
-
-        // if (k.second.size() > 3)  // If it has more than 3 points
-        //{
-        //     // Write out the first and last point into a txt file.
-        //     std::cout   << std::left << std::setw(10) << "|| K value = " << std::setw(10) <<
-        //     k.first
-        //                 << std::setw(20) << " || Points along the same k value = " <<
-        //                 std::setw(3) << k.second.size() << "|| \n";
-        // }
-        // else
-        //{
-        //     std::cout   << std::left << std::setw(10) << "|| K value = " << std::setw(10) <<
-        //     k.first
-        //                 << std::setw(20) << " || Points along the same k value = " <<
-        //                 std::setw(3) << k.second.size() << "|| \n";
-        // }
-
-        // Find a K value with < 3 points
-        if (k.second.size() > 3) {
-            // Get the start and end points
-            auto startPoint = *(k.second.begin());
-            auto endPoint = *(--k.second.end());
-
-            outputFile << startPoint.first << " " << startPoint.second << " " << endPoint.first
-                       << " " << endPoint.second << std::endl;
+    // Write out the coordinates to the file
+    for (auto i : linesToDraw) 
+    {
+        std::pair<int, int> p1 = *(i.second.begin());
+        std::pair<int, int> p2 = *(--i.second.end());
+        outputFile << p1.first << " " << p1.second << " " << p2.first << " " << p2.second << "\n";
+        
+        // Write out to the console
+        for (auto j : i.second) 
+        {
+            if (j != *(--i.second.end()))
+                std::cout << "(" << j.first << "," << j.second << ")->";
+            else
+                std::cout << "(" << j.first << "," << j.second << ")\n";
         }
     }
+
+    outputFile.close();
 
     /*******************************************/
 
